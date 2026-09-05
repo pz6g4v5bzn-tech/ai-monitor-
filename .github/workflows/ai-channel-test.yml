@@ -1,0 +1,39 @@
+name: AI Channel Send Test
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - ".github/workflows/ai-channel-test.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  send-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install test dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install openai requests
+
+      - name: OpenAI to Gemini Pro to OpenAI and Discord
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          DISCORD_HOOK: ${{ secrets.DISCORD_HOOK }}
+          OPENAI_MODEL: gpt-5.6-sol
+          GEMINI_MODEL: gemini-3.1-pro-preview
+        run: python channel_test.py
