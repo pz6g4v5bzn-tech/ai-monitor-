@@ -6,7 +6,7 @@ on:
     branches: ["main"]
     paths:
       - ".github/workflows/gemini-current-review.yml"
-      - "gemini_current_review.py"
+      - "gemini_current_review_full.py"
 
 permissions:
   contents: read
@@ -38,5 +38,4 @@ jobs:
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           DISCORD_HOOK: ${{ secrets.DISCORD_HOOK }}
-          GEMINI_MODEL: gemini-3.6-flash
-        run: python gemini_current_review.py
+        run: python gemini_current_review_full.py
