@@ -6,6 +6,7 @@ on:
     branches: ["main"]
     paths:
       - ".github/workflows/gemini-current-review.yml"
+      - "gemini_current_review.py"
 
 permissions:
   contents: read
@@ -36,7 +37,6 @@ jobs:
       - name: Send fresh CODEBLACK evidence to Gemini and Discord
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          TARGET_GITHUB_TOKEN: ${{ secrets.TARGET_GITHUB_TOKEN }}
           DISCORD_HOOK: ${{ secrets.DISCORD_HOOK }}
           GEMINI_MODEL: gemini-3.6-flash
         run: python gemini_current_review.py
